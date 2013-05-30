@@ -1,0 +1,21 @@
+* {
+  font-family: 'Roboto', sans-serif; }
+
+.dryselect_container {
+  border: solid 1px #EEE; }
+
+.dryselect_list_container {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .dryselect_list_container li {
+    background: #FFF;
+    padding: 10px; }
+    .dryselect_list_container li.selected {
+      background: #f2f5f4; }
+    .dryselect_list_container li input[type="checkbox"] {
+      display: block;
+      float: left;
+      margin: 5px 10px 0 0; }
+    .dryselect_list_container li:hover {
+      background: #fafafb; }
