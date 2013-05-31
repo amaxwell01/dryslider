@@ -1,87 +1,75 @@
 <!doctype html>
 <html>
 <head>
-<title>dryselect example</title>
+<title>dryslider example</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 <link href="stylesheets/css/styles.css"  rel="stylesheet"/>
-<script src="../../dryselect.js"></script>
+<script src="../../dryslider.js"></script>
 </head>
 <body>
 First main example
 
 <div>
-    <div>
-        All <input type="checkbox" id="selectAll">
-    </div>
-    <div>
-        Some <input type="checkbox" id="selectSome">
-    </div>
     <h3>items</h3>
-    <section class="dryselect_container" data-name="dryselect_example"></section>
+    <section data-name="dryslider_example"></section>
 </div>
 
 <script>
-dryselect.create({
-    name: 'dryselect_example',
-    checkboxes: true,
+dryslider.create({
+    name: 'dryslider_example',
+    range: true,
     values: [
         {
-            title: 'One', // String or Num
-            value: '1', // string or num or boolean
-            itemClass: '', // string
-            itemID: '' // string
+            title: '4.1',
+            value: '4.1'
         },
         {
-            title: 'Two', // String or Num
-            value: '2', // string or num or boolean
-            itemClass: '', // string
-            itemID: '' // string
+            title: '4.2',
+            value: '4.2'
+        },
+        {
+            title: '4.3',
+            value: '4.3'
+        },
+        {
+            title: '5.0',
+            value: '5.0'
+        },
+        {
+            title: '5.0.1',
+            value: '5.0.1'
+        },
+        {
+            title: '5.1',
+            value: '5.1'
+        },
+        {
+            title: '5.1.1',
+            value: '5.1.1'
+        },
+        {
+            title: '6.0',
+            value: '6.0'
         }
-     ],
+    ],
+    markers: [
+        {
+            markerClass: '', // string
+            startValue: '4.2', // string or number or boolean
+            valueBubble: true
+        },
+        {
+            markerClass: '', // string
+            startValue: '5.1', // string or number or boolean
+            valueBubble: true
+        }
+     ] 
 });
 
+
+
 $(function() {
- 
-    $('#selectAll').on('change', function( event ) {
-
-        var self = this;
-        var target = $(event.target);
-        var checked = target.prop('checked');
-
-        if ( checked ) {
-            dryselect.select({
-                name: 'dryselect_example',
-                values: 'all'
-            });
-        } else {
-            dryselect.select({
-                name: 'dryselect_example',
-                values: 'none'
-            });
-        }
-    });
-
-
-    // Showing the ability to select only specified values
-    $('#selectSome').on('change', function( event ) {
-
-        var self = this;
-        var target = $(event.target);
-        var checked = target.prop('checked');
-
-        if ( checked ) {
-            dryselect.select({
-                name: 'dryselect_example',
-                values: ['1']
-            });
-        } else {
-            dryselect.select({
-                name: 'dryselect_example',
-                values: 'none'
-            });
-        }
-    });
 
     // Get the selected count
     // setInterval(function() {
@@ -98,7 +86,7 @@ $(function() {
     //     console.log( total );
     // },3000);
 
-    dryselect.set({
+    /*dryslider.set({
         name: 'dryselect_example',
         values: [
             {
@@ -107,7 +95,7 @@ $(function() {
                 newValue: 100
             }
         ]
-    });
+    });*/
 });
 </script>
 </body>

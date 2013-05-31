@@ -1,7 +1,6 @@
 (function(window, document, $, undefine) {
 
     var defaultSettings = {
-        checkbox: '<input type=checkbox />'
     };
 
     var userSettings;
@@ -13,11 +12,11 @@
         };
     }
 
-    var dryselect = {
+    var dryslider = {
 
         create: function( args ) {
             var self = this;
-            var newValues;
+            var newValues = '';
             var listItems;
 
             if ( args ) {
@@ -25,30 +24,61 @@
             }
 
             if ( userSettings.name ) {
-                userSettings.element = $('[data-name="' + args.name + '"]');
-                userSettings.element.attr('id', (args.name + '_container') );
+                userSettings.element = $('[data-name="' + userSettings.name + '"]');
+                userSettings.element.attr('id', (userSettings.name + '_container') );
+                userSettings.element.addClass( 'dryslider_container' );
+
+                // Default to a horizontal orientation if non is provided
+                if ( userSettings.orientation ) {
+                    userSettings.element.addClass( 'dryslider_' + userSettings.orientation );
+                } else {
+                    userSettings.element.addClass( 'dryslider_horizontal' );
+                }
             }
 
-            // Update the selectable values to the new DOM
-            listItems = self.newSelectDOM();
-            newValues = '<ol class="dryselect_list_container">' + listItems + '</ol>';
+            // Divide and place the markers onto the slider
+            if ( userSettings.values && Array.isArray(userSettings.values) ) {
+                userSettings.element.attr('data-count', userSettings.values.length);
+            } else {
+                console.log( 'Please include some initial values' );
+            }
+
+            // create the button and slider elements based of the userSettings
+            if ( userSettings.range ) {
+                newValues += '<div class="dryslider_range"></div>';
+            }
+
+            if ( userSettings.markers && Array.isArray(userSettings.markers)) {
+                newValues += self.createMarkers( userSettings.markers );
+            }
 
             userSettings.element.append( newValues );
 
-            self.enableSelection( args.name );
+            self.enableSelection( userSettings.name );
         },
 
-        count: function( args ) {
-            var dryselectContainer = $('#' + args.name + '_container');
-            var selectOptions = dryselectContainer.find('li.selected');
-            var count = 0;
-            var i = 0;
+        createMarkers: function( markers ) {
+            var markerDOM = '';
+            var itemValue;
 
-            for ( i = 0; i < selectOptions.length; i++ ) {
-                count++;
-            }
+            $.each(markers, function(key, value) {
 
-            return count;
+                if ( value.startValue ) {
+                    itemValue = value.startValue;
+                } else {
+                    itemValue = 0;
+                }
+
+                markerDOM += '<button class="dryslider_handle" data-value="' + itemValue + '"></div>';
+            });
+
+            return markerDOM;
+        },
+
+
+        // Disable the slider so that it can't be manipulated
+        disable: function() {
+
         },
 
         enableSelection: function( name ) {
@@ -124,26 +154,6 @@
             return items;
         },
 
-        newSelectDOM: function() {
-            var newValues = '';
-            var checkbox = '';
-
-            if ( userSettings.values ) {
-                $.each( userSettings.values, function(key, value) {
-                    if ( userSettings.checkboxes ) {
-                        checkbox = '<input type="checkbox" name="' + value.title + '" value="' + value.value + '"">';
-                    }
-
-                    newValues += '<li class="' + value.itemClass + '" id="' + value.itemID + '" data-value="' + value.value + '">' + checkbox + '<span class="title">' + value.title + '</span></li>';
-                });
-            } else {
-                // take the child contents and turn that into the new DOM
-                // @TODO See if I only want to select <option> and <li> elements
-            }
-
-            return newValues;
-        },
-
         select: function( args ) {
             var dryselectContainer = $('#' + args.name + '_container');
             var selectOptions = dryselectContainer.find('li');
@@ -214,5 +224,5 @@
         }
     };
 
-    window.dryselect = dryselect;
+    window.dryslider = dryslider;
 })(window, document, jQuery);

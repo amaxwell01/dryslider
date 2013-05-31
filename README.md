@@ -1,4 +1,4 @@
-dryselect
+dryslider
 =========
 
 Advanced selection elements
